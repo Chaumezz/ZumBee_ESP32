@@ -5,4 +5,10 @@ Controlado de momento sobre BT Classic ejecutado en el ESP32, un control PID pos
 
 
 
+
+
+
 ![ZumBee de costado](https://user-images.githubusercontent.com/49609524/185790345-9270aa96-7bab-4e4f-8870-38040620d93c.jpg)
+
+
+
