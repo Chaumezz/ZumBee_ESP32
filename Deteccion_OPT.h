@@ -1,11 +1,10 @@
 void esquivaObstaculos ()
 {
-  if (sensor.isSampleDone())
+   if (dataReady)
   {
     sensor.readOutputRegs();
     distances[sensor.channelUsed] = sensor.distanceMillimeters;
-    sensor.nextChannel();
-    sensor.startSample();
+    dataReady = false;
   }
 
   if (distances[1]  >= 300 && distances[1]  < 400)
@@ -37,66 +36,12 @@ void esquivaObstaculos ()
   {
     MoverOrugas ( 1021, 1023);
   }
+   if (distances [0] < 120 && distances [1] < 120 && distances [2] < 120)
+  {
+    retrocede();
+    delay (100);
+  }
 }
-
-
-
-
-/*
-
-
-
-  void esquivaObstaculos ()
-  {
-  if (distances[0] && distances[1] && distances[2] > 300)
-  {
-   MoverOrugas ( 1023, 1023);
-  }
-  if (distances[0] && distances[1] && distances[2] < 300)
-  {
-  MoverOrugas ( 800, 800);
-  }
-  if (distances[0] && distances[1] && distances[2] < 200)
-  {
-   MoverOrugas ( 600, 600);
-  }
-  if (distances[1] < 120  )
-  {
-    if (distances [0] <= distances [2]) giraDch ();
-    else giraIzq ();
-  }
-  if (distances[0] < 110 )
-  {
-  MoverOrugas ( 600, 0);
-  }
-  if ( distances[2] < 110 )
-  {
-  MoverOrugas ( 0, 600);
-  }
-  }
-
-
-  if ( distances[1] < 250  && distances[1]  > 150 )
-  {
-    digitalWrite(DER_RET, LOW);       digitalWrite(IZQ_RET, LOW);
-    ledcWrite (DER_AVZ_PWM_Ch, 900); ledcWrite (IZQ_AVZ_PWM_Ch, 900);
-    Serial.println ("900");
-  }
-
-
-  if (distances[0] < 110 )
-  {
-  digitalWrite(DER_RET, LOW);       digitalWrite(IZQ_RET, LOW);
-  ledcWrite (DER_AVZ_PWM_Ch, 0); ledcWrite (IZQ_AVZ_PWM_Ch, 800);
-  }
-  if ( distances[2] < 110 )
-  {
-  digitalWrite(DER_RET, LOW);       digitalWrite(IZQ_RET, LOW);
-  ledcWrite (DER_AVZ_PWM_Ch, 800); ledcWrite (IZQ_AVZ_PWM_Ch, 0);
-  }
-*/
-
-
 
 void giraDch () {
   SetpointL = counter_L + 650;
@@ -105,6 +50,7 @@ void giraDch () {
   myPID_R.Compute();
   MoverOrugas ( OutputL, OutputR);
 }
+
 void giraIzq () {
   SetpointL = counter_L - 650 ;
   SetpointR = counter_R + 650 ;
@@ -112,6 +58,11 @@ void giraIzq () {
   myPID_R.Compute();
   MoverOrugas ( OutputL, OutputR);
 }
+
+void retrocede () {
+  MoverOrugas ( -800, -800);
+}
+
 void paroMotores () {
   MoverOrugas ( 0, 0);
 }
