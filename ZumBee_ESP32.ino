@@ -25,15 +25,14 @@ OPT3101 sensor;
 const int DER_PWM_Ch = 0;
 const int IZQ_PWM_Ch = 2;
 const int PWM_Res = 10;
-const int PWM_Freq = 40000;
+const int PWM_Freq = 20000;
 
 //Variables para conectar PID
 double SetpointL, counter_L, OutputL;
 double SetpointR, counter_R, OutputR;
 
 //Constructor de PID y valores iniciales
-double KpL = 1023, KiL = 3, KdL = 0;
-double KpR = 1023, KiR = 3, KdR = 0;
+double Kp = 2.6, Ki = 0.8, Kd = 0.4;
 PID myPID_L(&counter_L, &OutputL, &SetpointL, KpL, KiL, KdL, DIRECT);
 PID myPID_R(&counter_R, &OutputR, &SetpointR, KpR, KiR, KdR, DIRECT);
 
@@ -43,7 +42,7 @@ void ICACHE_RAM_ATTR doEncodeB();
 void ICACHE_RAM_ATTR doEncodeC();
 void ICACHE_RAM_ATTR doEncodeD();
 
-const int timeThreshold = 2;
+const int timeThreshold = 5;
 long timeCounter = 0;
 
 volatile long ISRCounter_L = 0;
@@ -55,8 +54,8 @@ bool IsCW_R = true;
 //  Variables modo, velocidad y JOYSTICK
 int mode;
 char BluetoothData;
-int pad_x, pad_y;
-int Ispeed, Dspeed;
+int pad_x, pad_y = 512;
+int Ispeed, Dspeed = 0;
 
 //Arrays amplitud y distancia OPT3101
 uint16_t amplitudes[3];
