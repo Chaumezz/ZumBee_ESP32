@@ -4,6 +4,12 @@
 #include <Adafruit_Sensor.h>
 #include <Adafruit_BNO055.h>
 #include "BluetoothSerial.h"
+#include "DeteccionOPT.h"
+#include "doEncode.h"
+#include "leerBT.h"
+#include "monitorBat.h"
+#include "posicionBNO.h"
+#include "xyAdiferencial.h"
 BluetoothSerial SerialBT;
 OPT3101 sensor;
 
